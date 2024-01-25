@@ -1,0 +1,16 @@
+# Make it possible to switch adapters by passing the ACTION_CABLE_ADAPTER env variable.
+# For example, you can use it fallback to the standard Action Cable in staging/review
+# environments (by setting `ACTION_CABLE_ADAPTER=redis`).
+development:
+  adapter: any_cable
+
+test:
+  adapter: any_cable
+
+production:
+  adapter: <%= ENV.fetch("ACTION_CABLE_ADAPTER", "any_cable") %>
+
+#   Performing Turbo::Streams::ActionBroadcastJob (Job ID: 1f03a3aa-596d-46a7-b014-29ee6d5723a8) from Async(default) enqueued at 2024-01-05T12:55:52.311819000Z with arguments: "books", {:action=>:append, :target=>"books", :targets=>nil, :locals=>{:book=>#<GlobalID:0x0000000108539c20 @uri=#<URI::GID gid://book-list/Book/21>>}, :partial=>"books/book"}
+#   Rendered books/_book.html.erb (Duration: 0.3ms | Allocations: 280)
+# [ActionCable] Broadcasting to books: "<turbo-stream action=\"append\" target=\"books\"><template>\n<div id=book_21> heyagain </div></template></turbo-stream>"
+# Performed Turbo::Streams::ActionBroadcastJob (Job ID: 1f03a3aa-596d-46a7-b014-29ee6d5723a8) from Async(default) in 49.96ms
